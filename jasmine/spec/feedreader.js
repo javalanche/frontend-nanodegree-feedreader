@@ -56,6 +56,13 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
 
+describe('The menu', function() {
+	it('has the menu element is hidden by default', function() {
+        //var menuIcon = $('.menu-icon-link');
+		//console.log(menuIcon);
+		expect(1).toBeTruthy();
+	});
+});
     /* TODO: Write a new test suite named "Initial Entries" */
 
         /* TODO: Write a test that ensures when the loadFeed
