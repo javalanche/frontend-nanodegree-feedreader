@@ -8,6 +8,7 @@
  * since some of these tests may require DOM elements. We want
  * to ensure they don't run until the DOM is ready.
  */
+console.log("sourced feedreader.js properly")
 $(function() {
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
@@ -26,17 +27,18 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
+		it('has a URL defined and that the URL is not empty', function() {
+			allFeeds.forEach(function(entry){
+				//console.log(entry);
+				expect(entry.url).toBeTruthy();
+			});
+		});
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
-         */
-
-
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
-         */
+		it('has a name defined and that the name is not empty', function() {
+			allFeeds.forEach(function(entry){
+				expect(entry.name).toBeTruthy();
+			});
+		});
     });
 
 
