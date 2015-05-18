@@ -57,7 +57,8 @@ describe('Initial Entries', function() {
 		});
 	});
 	 it('has at least a single .entry element within the .feed container', function(done) {
-            expect($('.entry')[0]).toBeInDOM()
+            // expect($('.entry')[0]).toBeInDOM()
+            expect($('.feed .entry')).toBeInDOM()
 		  done();
 	 });
 });
