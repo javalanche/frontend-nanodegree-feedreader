@@ -56,9 +56,8 @@ describe('Initial Entries', function() {
 			done();
 		});
 	});
-	 it('should grab initial contacts', function(done) {
+	 it('has at least a single .entry element within the .feed container', function(done) {
             expect($('.entry')[0]).toBeInDOM()
-		 // expect(true).toBe(true);
 		  done();
 	 });
 });
