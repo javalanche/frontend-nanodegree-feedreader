@@ -58,7 +58,8 @@ describe('Initial Entries', function() {
 	});
 	 it('has at least a single .entry element within the .feed container', function(done) {
             // expect($('.entry')[0]).toBeInDOM()
-            expect($('.feed .entry')).toBeInDOM()
+            expect($('.feed .entry:eq(0)')).toBeInDOM();
+            // console.log($('.feed .entry:eq(0)').html());
 		  done();
 	 });
 });
@@ -68,5 +69,37 @@ describe('Initial Entries', function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+describe('New Feed Selection', function() {
+    var oldContent;
+    beforeEach(function(done) {
+        loadFeed(0, function () {
+            done();
+        });
+    });
+	it('has a test that ensures when a new feed is loaded \
+        by the loadFeed function that the content actually changes', function(done) {
+		
+        oldContent = $('.feed .entry:eq(0)').html();
+        expect($('.feed .entry:eq(0)')).toBeInDOM();
+		done();
+	});
+    describe('loading new feed of data to loadFeed()...', function() {
+        beforeEach(function(done) {
+            loadFeed(1, function () {
+                done();
+            });
+        });
+		it('the data has changed', function(done) {
+			
+			var newContent = $('.feed .entry:eq(0)').html();
+			// console.log(oldContent);
+			// console.log(newContent);
+			expect(oldContent).not.toEqual(newContent);
+			done();
+		});
+	 });    
+
+});
+
 
 }());
