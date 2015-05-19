@@ -1,3 +1,10 @@
+# INSTRUCTION TO RUN
+
+all that is needed is to open the index.html as the app is located here as well as the  jasmine test file because it is sourced at the end of the file.
+
+you'll find the test file in jasmine/spec/feedreader.js 
+
+
 # Project Overview
 
 In this project you are given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.

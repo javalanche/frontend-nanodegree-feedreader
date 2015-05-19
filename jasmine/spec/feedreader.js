@@ -1,5 +1,5 @@
 
-// console.log("sourced feedreader.js properly")
+// source tests only once DOM is loaded
 $(function() {
 
     describe('RSS Feeds', function() {
@@ -9,46 +9,40 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-		it('has a URL defined and that the URL is not empty', function() {
+		it('have a URL defined and that the URL is not empty', function() {
 			allFeeds.forEach(function(entry){
-				//console.log(entry);
-				expect(entry.url).toBeTruthy();
+                expect(entry.url.length).not.toBe(0);
+                expect(entry.url).toContain("http");
 			});
 		});
 
-		it('has a name defined and that the name is not empty', function() {
+		it('have a name defined and that the name is not empty', function() {
 			allFeeds.forEach(function(entry){
-				expect(entry.name).toBeTruthy();
+                expect(entry.name.length).not.toBe(0);
+                expect(entry.name).toEqual(jasmine.any(String));
 			});
 		});
     });
 
 
 
-
+// code has class menu-hidden by default but a click event toggle this class
+// we simply execute that click and check for the class presence
 describe('The menu', function() {
-	var spyEvent;
 
-	it('has the menu element is hidden by default', function() {
-		expect('body').toHaveAttr('class', 'menu-hidden');
-	});
+	it('has the menu element hidden by default', function() {
+		expect($('body').hasClass("menu-hidden")).toBe(true);
+    });
 
-	it('a test that ensures the menu changes visibility when the menu icon is clicked', function() {
-		$('.menu-icon-link').trigger("click");
-		expect('body').not.toHaveAttr('class', 'menu-hidden');
+    it('changes visibility when the menu icon is clicked', function() {
+        $('.menu-icon-link').click();
+        expect($('body').hasClass("menu-hidden")).toBe(false);
 
-		$('.menu-icon-link').trigger("click");
-		expect('body').toHaveAttr('class', 'menu-hidden');
+        $('.menu-icon-link').click();
+        expect($('body').hasClass("menu-hidden")).toBe(true);
 	});
 });
-    /* TODO: Write a new test suite named "Initial Entries" */
 
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test wil require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
 
 describe('Initial Entries', function() {
 	beforeEach(function(done) {
@@ -56,46 +50,48 @@ describe('Initial Entries', function() {
 			done();
 		});
 	});
-	 it('has at least a single .entry element within the .feed container', function(done) {
-            // expect($('.entry')[0]).toBeInDOM()
+	 it('will be populated on page loads, which is the very \
+        first item in array containing entries', function() {
+            // jQuery grabs the very first .entry class that has a parent
+            // with class .feed only and ensure is in the DOM
             expect($('.feed .entry:eq(0)')).toBeInDOM();
-            // console.log($('.feed .entry:eq(0)').html());
-		  done();
 	 });
 });
-    /* TODO: Write a new test suite named "New Feed Selection"
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
 describe('New Feed Selection', function() {
     var oldContent;
-    beforeEach(function(done) {
+    
+    // asynchronous function needs to done parameter and done()
+    // reloads the first news feed 
+    beforeAll(function(done) {
         loadFeed(0, function () {
             done();
         });
     });
-	it('has a test that ensures when a new feed is loaded \
-        by the loadFeed function that the content actually changes', function(done) {
+	it('has a test that ensures when a news feed is loaded \
+        by the loadFeed function and that the content actually \
+        changes when another feed is loaded', function() {
 		
-        oldContent = $('.feed .entry:eq(0)').html();
-        expect($('.feed .entry:eq(0)')).toBeInDOM();
-		done();
-	});
+        // save the entire news feed for a comparison later
+        oldContent = $('.feed').html();
+        expect($('.feed')).toBeInDOM();
+    });
     describe('loading new feed of data to loadFeed()...', function() {
-        beforeEach(function(done) {
+        
+        // asynchronous function needs to done parameter and done()
+        // reloads the second news feed
+        beforeAll(function(done) {
             loadFeed(1, function () {
                 done();
             });
         });
-		it('the data has changed', function(done) {
-			
-			var newContent = $('.feed .entry:eq(0)').html();
+        it('the data has changed', function() {
+
+            //grabs the entire second news feed for comparison
+			var newContent = $('.feed').html();
 			// console.log(oldContent);
 			// console.log(newContent);
 			expect(oldContent).not.toEqual(newContent);
-			done();
 		});
 	 });    
 
